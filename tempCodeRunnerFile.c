@@ -1,1 +1,2 @@
-MAX_NAME
+
+    scanf("%i", &patient_ID);

@@ -10,7 +10,7 @@ int main() {
     char option = 'a';
     while (option != 'x') {
         printf("What do you want to do? [a] add a user, [l] list all users, [e] edit a user?, [x] exit\n");
-        scanf_s("%c", &option, 1); 
+        scanf("%c", &option); 
         while ((getchar()) != '\n');
 
         switch (option)
@@ -19,7 +19,7 @@ int main() {
         case 'a':
             if (num_users <= 4) {
                 printf("Enter the user's name.\n");
-                scanf_s("%s", names[num_users], sizeof(names[num_users]));
+                scanf("%s", names[num_users]);
                 while ((getchar()) != '\n');
                 ids[num_users] = num_users + 1;
                 num_users += 1;
@@ -41,13 +41,13 @@ int main() {
         case 'e':
             // 2. Edit a user
             printf("Enter the user's id.\n");
-            scanf_s("%d", &changeID);
+            scanf("%d", &changeID);
             while ((getchar()) != '\n');
             
             changeID--; 
             if (changeID >= 0 && changeID < num_users) {
                 printf("Enter the user's name.\n");
-                scanf_s("%s", names[changeID], sizeof(names[num_users]));
+                scanf("%s", names[changeID]);
                 while ((getchar()) != '\n');
             } else 
                 printf("The user does not exist!");
