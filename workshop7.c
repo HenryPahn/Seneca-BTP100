@@ -2,13 +2,31 @@
 #define SIZE 32
 
 //Enter your get_length function here
+int get_length(char *name) {
+    int count = 0;
+    for(int i = 0; name[i] != '\0'; i++) 
+        count++; 
+    return count;
+}
 
 //Enter your break_names function here
+void break_names(char *name, char *first_name, char *last_name) { 
+    for(int i = 0; ; i++) {
+        if(name[i] == ' ') {
+            int k = 0;
+            for(int j = i + 1; name[j] != '\0'; j++) {
+                last_name[k] = name[j];
+                k++;
+            }
+            break;
+        } else 
+            first_name[i] = name[i];
+    }
+}
 
 void get_name(char *name){
     printf("Enter your full name: ");
-    //scanf("%[^\n]%*c", name);
-    scanf_s("%[^\n]%*c", name, SIZE); //Visual Studio
+    scanf("%[^\n]%*c", name, SIZE); 
 }
 
 int main(){
