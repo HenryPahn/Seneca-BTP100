@@ -1,3 +1,4 @@
+// Workshop 07 - Hoang Phan
 #include <stdio.h>
 #define SIZE 32
 
