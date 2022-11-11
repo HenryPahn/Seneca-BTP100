@@ -13,7 +13,7 @@ int get_length(char *name) {
 //Enter your break_names function here
 void break_names(char *name, char *first_name, char *last_name) { 
     for(int i = 0; ; i++) {
-        if(name[ik] == ' ') {
+        if(name[i] == ' ') {
             int k = 0;
             for(int j = i + 1; name[j] != '\0'; j++) {
                 last_name[k] = name[j];
@@ -27,7 +27,7 @@ void break_names(char *name, char *first_name, char *last_name) {
 
 void get_name(char *name){
     printf("Enter your full name: ");
-    scanf("%[^\n]%*c", name, SIZE); 
+    scanf("%[^\n]%*c", name); 
 }
 
 int main(){
