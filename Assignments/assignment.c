@@ -25,23 +25,23 @@ void get_name(char *name){
 }
 
 // Add patient function
-void add_patient(struct Database *temp) { 
-    if(temp->num_patients < MAX_PATIENTS) {
-        printf("Enter patient's id.\n");
-        scanf("%i", &temp->clients[temp->num_patients].id);
-        while ((getchar()) != '\n');
+// void add_patient(struct Database *temp) { 
+//     if(temp->num_patients < MAX_PATIENTS) {
+//         printf("Enter patient's id.\n");
+//         scanf("%i", &temp->clients[temp->num_patients].id);
+//         while ((getchar()) != '\n');
         
-        get_name(temp->clients[temp->num_patients].name); // Get full names having spaces.
+//         get_name(temp->clients[temp->num_patients].name); // Get full names having spaces.
 
-        printf("Enter patient's height.\n");
-        scanf("%f", &temp->clients[temp->num_patients].height);
-        printf("Enter patient's weight.\n");
-        scanf("%f", &temp->clients[temp->num_patients].weight);
+//         printf("Enter patient's height.\n");
+//         scanf("%f", &temp->clients[temp->num_patients].height);
+//         printf("Enter patient's weight.\n");
+//         scanf("%f", &temp->clients[temp->num_patients].weight);
 
-        temp->num_patients++; // Increase the number of patients in the database
-    } else 
-        printf("Database is full!\n");
-}
+//         temp->num_patients++; // Increase the number of patients in the database
+//     } else 
+//         printf("Database is full!\n");
+// }
 
 // A. 4. display_patient section
 // Check whether the input ID is valid or not
@@ -100,6 +100,35 @@ void remove_patient(struct Database *temp) {
         temp->num_patients--;
     } else 
         printf("Error! No patient with provided ID found!!!\n");
+}
+
+// B. 3. add_patient section
+void add_patient(struct Database *temp) { 
+    if(temp->num_patients < MAX_PATIENTS) {
+        int patient_ID;
+        printf("Enter patient's id.\n");
+        scanf("%d", &patient_ID);
+        int pos = -1;
+
+        while(checkID(temp->clients, temp->num_patients, patient_ID, &pos)) { // Check whether the provided ID is unique or not
+            printf("There is a patient with the provided ID!\n");
+            printf("Enter patient's id.\n");
+            scanf("%d", &patient_ID);
+        }
+
+        temp->clients[temp->num_patients].id = patient_ID; // Assign the provided ID
+        while ((getchar()) != '\n');
+        
+        get_name(temp->clients[temp->num_patients].name); // Get full names having spaces.
+
+        printf("Enter patient's height.\n");
+        scanf("%f", &temp->clients[temp->num_patients].height);
+        printf("Enter patient's weight.\n");
+        scanf("%f", &temp->clients[temp->num_patients].weight);
+
+        temp->num_patients++; // Increase the number of patients in the database
+    } else 
+        printf("Database is full!\n");
 }
 
 int main() {
