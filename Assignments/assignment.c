@@ -88,6 +88,20 @@ void edit_patient(struct Database *temp) {
         printf("Error! No patient with provided ID found!!!\n");
 }
 
+// B. 2. remove_patient section
+void remove_patient(struct Database *temp) {
+    int patient_ID;
+    printf("Enter patient's id.\n");
+    scanf("%d", &patient_ID);
+    int pos = -1;
+    if(checkID(temp->clients, temp->num_patients, patient_ID, &pos)) { // Check whether the input ID is valid or not
+        for(int i = pos; i < temp->num_patients - 1; i++) // Remove patient's id at the current position
+            temp->clients[i] = temp->clients[i + 1];
+        temp->num_patients--;
+    } else 
+        printf("Error! No patient with provided ID found!!!\n");
+}
+
 int main() {
     struct Database list;
     list.num_patients = 0;
@@ -113,6 +127,7 @@ int main() {
             break; 
         case 'r':
             // B. 2. Remove a patient
+            remove_patient(&list);
             break;
         case 'x':
             // A. 5. Exit the program
