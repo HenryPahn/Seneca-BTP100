@@ -20,7 +20,6 @@ struct Database {
 // A. 3. add_patient section
 // Get full names having spaces.
 void get_name(char *name){ 
-    printf("Enter patient's name.\n");
     scanf("%[^\n]%*c", name); 
 }
 
@@ -30,7 +29,7 @@ void get_name(char *name){
 //         printf("Enter patient's id.\n");
 //         scanf("%i", &temp->clients[temp->num_patients].id);
 //         while ((getchar()) != '\n');
-        
+        //    printf("Enter patient's name.\n"); 
 //         get_name(temp->clients[temp->num_patients].name); // Get full names having spaces.
 
 //         printf("Enter patient's height.\n");
@@ -55,17 +54,21 @@ int checkID(struct Patient *arr, int n, int key, int *pos) {
 }
 
 // Display patient function
+void display(struct Patient temp, int pos) {
+    printf("Patient's id: %i\n", temp.id);
+    printf("Patient's name: %s\n", temp.name);
+    printf("Patient's height: %.2f\n", temp.height);
+    printf("Patient's weight: %.2f\n", temp.weight);
+    printf("Patient's BMI: %f\n", temp.weight / (temp.height * temp.height));
+}
+
 void display_patient(struct Database temp) {
     int patient_ID;
     printf("Enter patient's id.\n");
     scanf("%d", &patient_ID);
     int pos = -1;
     if(checkID(temp.clients, temp.num_patients, patient_ID, &pos)) { // Check whether the input ID is valid or not
-        printf("Patient's id: %i\n", temp.clients[pos].id);
-        printf("Patient's name: %s\n", temp.clients[pos].name);
-        printf("Patient's height: %.2f\n", temp.clients[pos].height);
-        printf("Patient's weight: %.2f\n", temp.clients[pos].weight);
-        printf("Patient's BMI: %f\n", temp.clients[pos].weight / (temp.clients[pos].height * temp.clients[pos].height));
+        display(temp.clients[pos], pos);
     } else 
         printf("Error! Invalid patient's ID!!!\n");
 }
@@ -78,6 +81,7 @@ void edit_patient(struct Database *temp) {
     int pos = -1;
     if(checkID(temp->clients, temp->num_patients, patient_ID, &pos)) { // Check whether the input ID is valid or not
         while ((getchar()) != '\n');
+        printf("Enter patient's name.\n");
         get_name(temp->clients[pos].name); // Get full names having spaces.
 
         printf("Enter patient's height.\n");
@@ -119,6 +123,7 @@ void add_patient(struct Database *temp) {
         temp->clients[temp->num_patients].id = patient_ID; // Assign the provided ID
         while ((getchar()) != '\n');
         
+        printf("Enter patient's name.\n");
         get_name(temp->clients[temp->num_patients].name); // Get full names having spaces.
 
         printf("Enter patient's height.\n");
@@ -131,13 +136,65 @@ void add_patient(struct Database *temp) {
         printf("Database is full!\n");
 }
 
+// C. 1. save_databse section
+void save_database(struct Database temp) {
+    char file_name[100];
+    printf("Enter file's name.\n");
+    scanf("%s", file_name);
+
+    FILE  *f = fopen(file_name, "w");
+
+    // add content to file
+    fprintf(f, "%i\n", temp.num_patients); 
+    for(int i = 0; i < temp.num_patients; i++) 
+        fprintf(f, "%i,%s,%i,%.2f,%.2f\n", temp.clients[i].id, temp.clients[i].name, 30, temp.clients[i].weight, temp.clients[i].height);
+        
+    fclose(f); // close file 
+}
+
+// C. 2. retrieve_database 
+void retrieve_database(struct Database *temp) {
+    char file_name[100];
+    printf("Enter file's name.\n");
+    scanf("%s", file_name); 
+
+    FILE *f = fopen(file_name, "r");
+    if (f == NULL) // check whether the file is exist
+        printf("Error! Doesn't exist %s", file_name); 
+    
+    // assign the content to variables
+    int unknown_variable;
+    fscanf(f, "%i\n", &temp->num_patients);
+    for(int i = 0; i < temp->num_patients; i++) 
+        fscanf(f, "%i,%[^,],%i,%f,%f\n", &temp->clients[i].id, temp->clients[i].name, &unknown_variable, &temp->clients[i].weight, &temp->clients[i].height);
+    
+    fclose(f); // close file 
+}
+
+void display_critical_patients(struct Database temp) {
+    float BMI[temp.num_patients]; 
+    
+    int count = 0;
+    for(int i = 0; i < temp.num_patients; i++) {
+        BMI[i] = temp.clients[i].weight / (temp.clients[i].height * temp.clients[i].height); // caculate all patients' BMI
+        if(BMI[i] < 18 && BMI[i] > 30) { // validate
+            display(temp.clients[i], i);
+            printf("\n");
+        } else 
+            count++;
+    }
+
+    if(count > 0) 
+        printf("No critical patient!\n");
+}
+
 int main() {
     struct Database list;
     list.num_patients = 0;
 
     char option = 'a';
     while (option != 'x') {
-        printf("Enter [a] to add a patient, [d] to display a patient, [e] to edit a patient, [r] to remove a patient, [x] to exit\n");
+        printf("Enter [a] to add a patient, [d] to display a patient, [e] to edit a patient, [r] to remove a patient, [s] to save, [o] to retrieve database, [c] to display critical patient, [x] to exit\n");
         scanf("%c", &option); 
 
         switch (option)
@@ -157,6 +214,18 @@ int main() {
         case 'r':
             // B. 2. Remove a patient
             remove_patient(&list);
+            break;
+        case 's':
+            // C. 1. Save database
+            save_database(list);
+            break;
+        case 'o':
+            // C. 2. Retrieve database
+            retrieve_database(&list);
+            break;
+        case 'c':
+            // C. 3. Display critical patients
+            display_critical_patients(list);
             break;
         case 'x':
             // A. 5. Exit the program
