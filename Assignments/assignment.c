@@ -171,6 +171,8 @@ void retrieve_database(struct Database *temp) {
     fclose(f); // close file 
 }
 
+
+// C. 3. display_critical_patients section
 void display_critical_patients(struct Database temp) {
     float BMI[temp.num_patients]; 
     
