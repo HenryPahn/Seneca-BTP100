@@ -12,17 +12,24 @@ int get_length(char *name) {
 
 //Enter your break_names function here
 void break_names(char *name, char *first_name, char *last_name) { 
-    for(int i = 0; ; i++) {
-        if(name[i] == ' ') {
-            int k = 0;
-            for(int j = i + 1; name[j] != '\0'; j++) {
-                last_name[k] = name[j];
-                k++;
-            }
-            break;
-        } else 
-            first_name[i] = name[i];
-    }
+    // for(int i = 0; ; i++) {
+    //     if(name[i] == ' ') {
+    //         int k = 0;
+    //         for(int j = i + 1; name[j] != '\0'; j++) {
+    //             last_name[k] = name[j];
+    //             k++;
+    //         }
+    //         break;
+    //     } else 
+    //         first_name[i] = name[i];
+    // }
+
+    while(*name != ' ') 
+        *first_name++ = *name++;
+    *first_name = '\0';
+    name++;
+    while(*name != '\0') 
+        *last_name++ = *name++;
 }
 
 void get_name(char *name){
