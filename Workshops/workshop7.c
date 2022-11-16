@@ -2,16 +2,18 @@
 #include <stdio.h>
 #define SIZE 32
 
-//Enter your get_length function here
-int get_length(char *name) {
+// Enter your get_length function here
+int get_length(char *name)
+{
     int count = 0;
-    for(int i = 0; name[i] != '\0'; i++) 
-        count++; 
+    for (int i = 0; name[i] != '\0'; i++)
+        count++;
     return count;
 }
 
-//Enter your break_names function here
-void break_names(char *name, char *first_name, char *last_name) { 
+// Enter your break_names function here
+void break_names(char *name, char *first_name, char *last_name)
+{
     // for(int i = 0; ; i++) {
     //     if(name[i] == ' ') {
     //         int k = 0;
@@ -20,37 +22,38 @@ void break_names(char *name, char *first_name, char *last_name) {
     //             k++;
     //         }
     //         break;
-    //     } else 
+    //     } else
     //         first_name[i] = name[i];
     // }
 
-    while(*name != ' ') 
+    while (*name != ' ')
         *first_name++ = *name++;
     *first_name = '\0';
     name++;
-    while(*name != '\0') 
+    while (*name != '\0')
         *last_name++ = *name++;
 }
 
-void get_name(char *name){
+void get_name(char *name)
+{
     printf("Enter your full name: ");
-    scanf("%[^\n]%*c", name); 
+    scanf("%[^\n]%*c", name);
 }
 
-int main(){
-    
+int main()
+{
+
     char name[SIZE] = {"Marcel Jar"}, first_name[SIZE], last_name[SIZE];
 
     get_name(name);
-    printf("Your character array has %i characters.\n", 
-    
-    get_length(name));
+    printf("Your character array has %i characters.\n",
+
+           get_length(name));
     printf("Full name: %s\n", name);
 
     break_names(name, first_name, last_name);
     printf("First name: %s\n", first_name);
     printf("Last name: %s\n", last_name);
-    
-    return 0;
 
+    return 0;
 }

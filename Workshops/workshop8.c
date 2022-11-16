@@ -20,8 +20,7 @@ void save_student(struct student *temp)
 {
     printf("Enter student's id.\n");
     scanf("%i", &temp->id);
-    while ((getchar()) != '\n')
-        ;
+    while ((getchar()) != '\n');
     printf("Enter student's name.\n");
     get_name(temp->name);
     printf("Enter student's gpa.\n");
@@ -38,11 +37,8 @@ void print_student(struct student temp)
 
 int main()
 {
-
     struct student individual;
-
     save_student(&individual);
     print_student(individual);
-
     return 0;
 }
