@@ -21,11 +21,13 @@ void break_names(char *name, char *first_name, char *last_name)
     //             last_name[k] = name[j];
     //             k++;
     //         }
+    //         last_name[k] = '\0';
+    //         first_name[i] = '\0';
     //         break;
     //     } else
     //         first_name[i] = name[i];
     // }
-
+    
     while (*name != ' ')
         *first_name++ = *name++;
     *first_name = '\0';
