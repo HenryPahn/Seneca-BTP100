@@ -72,7 +72,7 @@ int checkID(const struct Patient *arr, int n, int key, int *pos)
 }
 
 // Display patient function
-void display(const struct Patient *temp, int pos)
+void display(const struct Patient *temp)
 {
     printf("Patient's id: %i\n", temp->id);
     printf("Patient's name: %s\n", temp->name);
@@ -90,7 +90,7 @@ void display_patient(const struct Database *temp)
     int pos = -1;
     if (checkID(temp->clients, temp->num_patients, patient_ID, &pos)) // Check whether the input ID is valid or not
     { 
-        display(&temp->clients[pos], pos);
+        display(&temp->clients[pos]);
     }
     else
         printf("Error! Invalid patient's ID!!!\n");
