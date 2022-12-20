@@ -6,6 +6,10 @@
         "vector": "cpp",
         "ostream": "cpp",
         "algorithm": "cpp",
-        "utility": "cpp"
+        "utility": "cpp",
+        "initializer_list": "cpp",
+        "type_traits": "cpp",
+        "xutility": "cpp",
+        "numeric": "cpp"
     }
 }
