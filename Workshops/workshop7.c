@@ -6,7 +6,9 @@
 int get_length(char *name)
 {
     int count = 0;
-    for (int i = 0; name[i] != '\0'; i++)
+    // for (int i = 0; name[i] != '\0'; i++)
+    //     count++;
+    while (name[count] != '\0') 
         count++;
     return count;
 }
@@ -50,7 +52,7 @@ int main()
     get_name(name);
     printf("Your character array has %i characters.\n",
 
-           get_length(name));
+    get_length(name));
     printf("Full name: %s\n", name);
 
     break_names(name, first_name, last_name);

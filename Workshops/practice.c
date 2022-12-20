@@ -1,23 +1,71 @@
 #include <stdio.h>
 
+
+//Define your struct here
+struct student
+{
+    int id; 
+    char name[32];
+    float gpa;
+};
+
+void get_name (char *name) {
+    scanf("%[^\n]%*c", name);
+}
+
+//Define save_student here
+void save_student(struct student *temp) {
+    printf("Enter id: "); 
+    scanf("%i", &temp->id);
+    while((getchar()) != '\n');
+    printf("Enter name: ");
+    get_name(temp->name);
+    printf("Enter gpa: ");
+    scanf("%f", &temp->gpa);
+}
+
+//Define Print_student here
+void print_student(struct student temp) {
+    printf("Id: %i\n", temp.id); 
+    printf("Name: %s\n", temp.name);
+    printf("GPA: %.2f\n", temp.gpa);
+}
+
+void save(struct student temp) {
+    FILE *f = NULL;
+    char file[100];
+    while((getchar()) != '\n');
+    printf("enter file name: "); 
+    get_name(file);
+    f = fopen(file, "w");
+    if (f != NULL) {
+        fprintf(f, "%i,%s,%f", temp.id, temp.name, temp.gpa);
+        fclose(f);
+    } else 
+        printf("error\n");
+}
+
+void open(struct student *temp) {
+    FILE *f = NULL;
+    char file[100];
+    printf("enter file name: "); 
+    get_name(file);
+    f = fopen(file, "r");
+    if (f != NULL) {
+        fscanf(f, "%i,%[^,],%f", &temp->id, &temp->name, &temp->gpa);
+        fclose(f);
+    } else 
+        printf("error\n");
+}
+
 int main() {
     
-    char des1[] = {"CELL3048005191"};
-    char des2[] = {"CELL3048005191"};
-    char des3[] = ("HOME3048005191");
-    char des4[] = ("TBA");
-    char des5[] = ("WORK7934346809");
+    struct student individual; 
+
+    // save_student(&individual);
     
-    char description[30];
-    int dec; 
-    for(int i = 0; ; i++) {
-        dec = (int) des5[i];
-        if (dec < 65 || dec > 90) {
-            description[i] = '\0';
-            break;
-        }
-        description[i] = des5[i];
-    }
-    printf("%s\n", description);
+    // save(individual);
+    open(&individual);
+    print_student(individual);
     return 0;
 }
